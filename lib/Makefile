@@ -1,12 +1,23 @@
 .POSIX:
+.SUFFIXES:  .f .o .s.o .d.o .l.o
+
 include ../conf.mk
 PREC = d
 LINK = $(CC)
 LDFLAGS = -lgfortran -lm
-CO_CFLAGS = `co.conf --cflags $(PREC)`
 
-O = \
-fm.o\
+CO_S_CFLAGS = `co.conf --cflags s`
+CO_D_CFLAGS = `co.conf --cflags d`
+CO_L_CFLAGS = `co.conf --cflags l`
+
+L = libfm_s.a libfm_d.a libfm_l.a
+H = fm.h
+
+O_D = fm.d.o
+O_S = fm.s.o
+O_L = fm.l.o
+
+O =\
 main.o\
 d3tstrcr.o\
 l3dterms.o\
@@ -24,15 +35,28 @@ st3routs.o\
 stfmm3dpart.o\
 yrecursion.o\
 
-libfm_d.a: $O; ar r $@ $O && ranlib $@
+all: $L
+libfm_s.a: $O $(O_S); ar r $@ $O $(O_S) && ranlib $@
+libfm_d.a: $O $(O_D); ar r $@ $O $(O_D) && ranlib $@
+libfm_l.a: $O $(O_L); ar r $@ $O $(O_L) && ranlib $@
 
 .f.o:; $(FC) $(FCFLAGS) $< -c
 .f90.o:; $(FC) $(FCFLAGS) $< -c
-.c.o:; $(CC) $(CO_CFLAGS) $(CFLAGS) $< -c
+.c.o:; $(CC) $(CFLAGS) $< -c
+
+.c.s.o:; $(CC) $(CFLAGS) $(CO_S_CFLAGS) -c -o $@ $<
+.c.d.o:; $(CC) $(CFLAGS) $(CO_D_CFLAGS) -c -o $@ $<
+.c.l.o:; $(CC) $(CFLAGS) $(CO_L_CFLAGS) -c -o $@ $<
 
 .SUFFIXES: .o .f .f90 .c
 
 lint:; $(MAKE) FCFLAGS='-Wall -Wextra -Og -g' CFLAGS='-Wall -Wextra -Og -g'
 
-.PHONY: clean lint
+install: lib hdr
+lib: $L
+	co.install $L $(PREFIX)/lib
+hdr: $H
+	co.install $H $(PREFIX)/include
+
+.PHONY: clean lint install
 clean:; rm -f -- $O libfm.a
