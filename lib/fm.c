@@ -6,6 +6,8 @@
 #include "fm.h"
 #include "stfmm3.h"
 
+static real pi = 3.141592653589793;
+
 #define T FM
 struct T
 {
@@ -44,7 +46,7 @@ fm_fin(T *q)
 }
 
 int
-fm_single(T *q,
+fm_single(T *q, real alpha,
 	    const real *x, const real *y, const real *z,
 	    const real *fx, const real *fy, const real *fz,
 	    /*io*/ real *vx, real *vy, real *vz)
@@ -53,6 +55,7 @@ fm_single(T *q,
     double *source, *sigma_sl, *vel, *pre;
     int ier, iprec, ifsingle, ifdouble, ifvel, ifgrad;
     double *sigma_dl, *sigma_dv, *grad;
+    real coeff;
 
     n = q->n;
     source = q->source;
@@ -81,16 +84,17 @@ fm_single(T *q,
     if (ier != 0)
 	ERR(CO_MEMORY, "stfmm3 fail to allocate (ier = %d, n = %d)",
 	    ier, n);
+    coeff = 4*pi*alpha;
     for (i = j = 0; i < n; i++) {
-	vx[i] += vel[j++];
-	vy[i] += vel[j++];
-	vz[i] += vel[j++];
+	vx[i] += coeff * vel[j++];
+	vy[i] += coeff * vel[j++];
+	vz[i] += coeff * vel[j++];
     }
     return CO_OK;
 }
 
 int
-fm_double(T *q,
+fm_double(T *q, real alpha,
 	    const real *x, const real *y, const real *z,
 	    const real *ux, const real *uy, const real *uz,
 	    const real *nx, const real *ny, const real *nz,
@@ -100,6 +104,7 @@ fm_double(T *q,
     double *source, *sigma_sl, *vel, *pre;
     int ier, iprec, ifsingle, ifdouble, ifvel, ifgrad;
     double *sigma_dl, *sigma_dv, *grad;
+    real coeff;
 
     n = q->n;
     source = q->source;
@@ -135,10 +140,12 @@ fm_double(T *q,
     if (ier != 0)
 	ERR(CO_MEMORY, "stfmm3 fail to allocate (ier = %d, n = %d)",
 	    ier, n);
+    
+    coeff = 4*pi*alpha;
     for (i = j = 0; i < n; i++) {
-	vx[i] += vel[j++];
-	vy[i] += vel[j++];
-	vz[i] += vel[j++];
+	vx[i] += coeff * vel[j++];
+	vy[i] += coeff * vel[j++];
+	vz[i] += coeff * vel[j++];
     }
     return CO_OK;
 }
