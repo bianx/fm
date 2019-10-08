@@ -1,3 +1,2 @@
 # fm
-fast multipole
-hello
+Fast multipole method
