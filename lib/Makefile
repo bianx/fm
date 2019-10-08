@@ -24,9 +24,8 @@ st3routs.o\
 stfmm3dpart.o\
 yrecursion.o\
 
-libstfmm3d.a: $O; ar r $@ $O && ranlib $@
+libfm.a: $O; ar r $@ $O && ranlib $@
 
-$M: $O; $(LINK) $O $(LDFLAGS)
 .f.o:; $(FC) $(FCFLAGS) $< -c
 .f90.o:; $(FC) $(FCFLAGS) $< -c
 .c.o:; $(CC) $(CO_CFLAGS) $(CFLAGS) $< -c
@@ -36,4 +35,4 @@ $M: $O; $(LINK) $O $(LDFLAGS)
 lint:; $(MAKE) FCFLAGS='-Wall -Wextra -Og -g' CFLAGS='-Wall -Wextra -Og -g'
 
 .PHONY: clean lint
-clean:; rm -f -- $O $M
+clean:; rm -f -- $O libfm.a
