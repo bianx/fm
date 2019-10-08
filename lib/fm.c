@@ -6,7 +6,7 @@
 #include "fm.h"
 #include "stfmm3.h"
 
-#define T FMM3
+#define T FM
 struct T
 {
     int n;
@@ -14,7 +14,7 @@ struct T
 };
 
 int
-fmm3_ini(int n, T **pq)
+fm_ini(int n, T **pq)
 {
     T *q;
 
@@ -31,7 +31,7 @@ fmm3_ini(int n, T **pq)
 }
 
 int
-fmm3_fin(T *q)
+fm_fin(T *q)
 {
     FREE(q->source);
     FREE(q->sigma_sl);
@@ -44,7 +44,7 @@ fmm3_fin(T *q)
 }
 
 int
-fmm3_single(T *q,
+fm_single(T *q,
 	    const real *x, const real *y, const real *z,
 	    const real *fx, const real *fy, const real *fz,
 	    /*io*/ real *vx, real *vy, real *vz)
@@ -90,7 +90,7 @@ fmm3_single(T *q,
 }
 
 int
-fmm3_double(T *q,
+fm_double(T *q,
 	    const real *x, const real *y, const real *z,
 	    const real *ux, const real *uy, const real *uz,
 	    const real *nx, const real *ny, const real *nz,

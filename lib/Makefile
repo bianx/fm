@@ -6,7 +6,7 @@ LDFLAGS = -lgfortran -lm
 CO_CFLAGS = `co.conf --cflags $(PREC)`
 
 O = \
-fmm3.o\
+fm.o\
 main.o\
 d3tstrcr.o\
 l3dterms.o\
