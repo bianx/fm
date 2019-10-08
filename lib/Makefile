@@ -24,7 +24,7 @@ st3routs.o\
 stfmm3dpart.o\
 yrecursion.o\
 
-libfm.a: $O; ar r $@ $O && ranlib $@
+libfm_d.a: $O; ar r $@ $O && ranlib $@
 
 .f.o:; $(FC) $(FCFLAGS) $< -c
 .f90.o:; $(FC) $(FCFLAGS) $< -c
