@@ -46,7 +46,7 @@ fm_fin(T *q)
 }
 
 int
-fm_single(T *q, real alpha,
+fm_single(T *q,
 	    const real *x, const real *y, const real *z,
 	    const real *fx, const real *fy, const real *fz,
 	    /*io*/ real *vx, real *vy, real *vz)
@@ -84,7 +84,7 @@ fm_single(T *q, real alpha,
     if (ier != 0)
 	ERR(CO_MEMORY, "stfmm3 fail to allocate (ier = %d, n = %d)",
 	    ier, n);
-    coeff = 4*pi*alpha;
+    coeff = 1/(4*pi);
     for (i = j = 0; i < n; i++) {
 	vx[i] += coeff * vel[j++];
 	vy[i] += coeff * vel[j++];
@@ -94,7 +94,7 @@ fm_single(T *q, real alpha,
 }
 
 int
-fm_double(T *q, real alpha,
+fm_double(T *q,
 	    const real *x, const real *y, const real *z,
 	    const real *ux, const real *uy, const real *uz,
 	    const real *nx, const real *ny, const real *nz,
@@ -140,8 +140,7 @@ fm_double(T *q, real alpha,
     if (ier != 0)
 	ERR(CO_MEMORY, "stfmm3 fail to allocate (ier = %d, n = %d)",
 	    ier, n);
-    
-    coeff = 4*pi*alpha;
+    coeff = 1/(4*pi);    
     for (i = j = 0; i < n; i++) {
 	vx[i] += coeff * vel[j++];
 	vy[i] += coeff * vel[j++];

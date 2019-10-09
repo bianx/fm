@@ -13,7 +13,7 @@ main()
 {
     int i, n;
     FM *q;
-    real alpha, *x, *y, *z, *fx, *fy, *fz, *vx, *vy, *vz;
+    real *x, *y, *z, *fx, *fy, *fz, *vx, *vy, *vz;
 
     He *he;
     y_inif(stdin, &he, &x, &y, &z);
@@ -29,8 +29,7 @@ main()
 	fz[i] = 1;
     }
 
-    alpha = 10.0;
-    fm_single(q, alpha, x, y, z, fx, fy, fz, /**/ vx, vy, vz);
+    fm_single(q, x, y, z, fx, fy, fz, /**/ vx, vy, vz);
 
     for (i = 0; i < 2; i++)
 	MSG(FMT " " FMT " " FMT, vx[i], vy[i], vz[i]);
