@@ -1,5 +1,5 @@
 .POSIX:
-.SUFFIXES:  .f .o .s.o .d.o .l.o
+.SUFFIXES:  .f .f90 .o .s.o .d.o .l.o
 
 include ../conf.mk
 PREC = d
