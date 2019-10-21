@@ -47,8 +47,6 @@ libfm_l.a: $O $(O_L); ar r $@ $O $(O_L) && ranlib $@
 .c.d.o:; $(CC) $(CFLAGS) $(CO_D_CFLAGS) -c -o $@ $<
 .c.l.o:; $(CC) $(CFLAGS) $(CO_L_CFLAGS) -c -o $@ $<
 
-.SUFFIXES: .o .f .f90 .c
-
 lint:; $(MAKE) FCFLAGS='-Wall -Wextra -Og -g' CFLAGS='-Wall -Wextra -Og -g'
 
 install: lib hdr
