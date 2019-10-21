@@ -56,4 +56,4 @@ hdr: $H
 	co.install $H $(PREFIX)/include
 
 .PHONY: clean lint install
-clean:; rm -f -- $O libfm.a
+clean:; rm -f -- $O $L
