@@ -4,7 +4,6 @@
 include ../conf.mk
 PREC = d
 LINK = $(CC)
-LDFLAGS = -lgfortran -lm
 
 CO_S_CFLAGS = `co.conf --cflags s`
 CO_D_CFLAGS = `co.conf --cflags d`
