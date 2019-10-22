@@ -20,6 +20,14 @@ struct Function
     void *params;
 };
 
+double
+fun(void *p, double x, double y)
+{
+    struct Function *function;
+    function = p;
+    return function->function(x, y, function->params);
+}
+
 void
 cubtri2(void*, double*, double, int, double*, double*, int*, double*, int, int*);
 
