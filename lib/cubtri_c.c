@@ -1,12 +1,33 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <real.h>
-#include <co/tri.h>
 #include <co/err.h>
 #include <co/memory.h>
 
 #include "cubtri.h"
 #define T Cubtri
+#define NW (5000)
+static double eps = 1e-4;
+static int mcalls = 1000;
+
+struct T {
+
+};
+
+struct Function
+{
+    double (*function)(double, double, void*);
+    void *params;
+};
+
+void
+cubtri2(void*, double*, double, int, double*, double*, int*, double*, int, int*);
+
+static
+double G(double x, double y, void *p)
+{
+    return x*y;
+}
 
 static real U[] = {
     0.659027622374092,
@@ -33,10 +54,6 @@ static real W[] = {
     0.16666666666666666667,
     0.16666666666666666667,
     0.16666666666666666667,
-};
-
-struct T {
-
 };
 
 struct Param {
@@ -94,28 +111,38 @@ cubtri_fin(T * q)
 
 int
 cubtri_apply(T * q, const real a[3], const real b[3],
-                    const real c[3], real(*f) (real, real, real, void *),
-                    void *param, /**/ real * pres)
+		    const real c[3], real(*f) (real, real, real, void *),
+		    void *param, /**/ real * pans)
 {
+    enum {X, Y};
     struct Param p;
-    real A, u, v, w, res;
-    int i, status;
+    double w[NW];
+    double TT[2*3], err, ans;
+    int i, status, ier, ncalls;
+    double a0[] = {0, 0};
+    double b0[] = {1, 0};
+    double c0[] = {0, 1};
+    struct Function function;
 
     p.f = f;
     p.param = param;
     p.a = a;
     p.b = b;
     p.c = c;
-    A = tri_area(a, b, c);
+    function.function = G;
+    function.params = NULL;
+    i = 0;
+    TT[i++] = a0[X];
+    TT[i++] = a0[Y];
+    TT[i++] = b0[X];
+    TT[i++] = b0[Y];
+    TT[i++] = c0[X];
+    TT[i++] = c0[Y];
 
-    res = 0;
-    for (i = 0; i < sizeof(W)/sizeof(W[0]); i++) {
-	u = U[i];
-	v = V[i];
-	w = W[i];
-	res += w * F(v, u, &p);
-    }
-    res *= A;
-    *pres = res;
+    cubtri2(&function, TT, eps, mcalls, &ans, &err, &ncalls, w, NW, &ier);
+    if (ier != 0)
+      ERR(CO_NUM, "cubtri2 failed");
+
+    *pans = ans;
     return CO_OK;
 }
