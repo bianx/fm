@@ -4,6 +4,7 @@ PREC = d
 M = \
 single\
 double\
+cubtri\
 
 CO_CFLAGS = `fm.conf --cflags $(PREC)`
 CO_LDFLAGS = `fm.conf --libs $(PREC)`
