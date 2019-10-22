@@ -3,6 +3,7 @@
 #include <real.h>
 #include <co/err.h>
 #include <co/memory.h>
+#include <co/tri.h>
 
 #include "cubtri.h"
 #define T Cubtri
@@ -91,9 +92,9 @@ cubtri_apply(T * q, const real a[3], const real b[3],
 {
     enum {X, Y};
     struct Param p;
-    double w[NW];
-    double TT[2*3], err, ans;
+    double w[NW], TT[2*3], err, ans;
     int i, status, ier, ncalls;
+    real A;
     double a0[] = {0, 0};
     double b0[] = {1, 0};
     double c0[] = {0, 1};
@@ -118,7 +119,7 @@ cubtri_apply(T * q, const real a[3], const real b[3],
     cubtri2(&function, TT, eps, mcalls, &ans, &err, &ncalls, w, NW, &ier);
     if (ier != 0)
       ERR(CO_NUM, "cubtri2 failed");
-
-    *pans = ans;
+    A = tri_area(a, b, c);
+    *pans = A * ans / 2;
     return CO_OK;
 }
