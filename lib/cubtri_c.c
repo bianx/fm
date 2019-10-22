@@ -16,8 +16,8 @@ struct T {
 
 struct Function
 {
-    double (*function)(double, double, void*);
-    void *params;
+  real (*function)(real, real, void *vp);
+  void *params;
 };
 
 double
@@ -30,39 +30,6 @@ fun(void *p, double x, double y)
 
 void
 cubtri2(void*, double*, double, int, double*, double*, int*, double*, int, int*);
-
-static
-double G(double x, double y, void *p)
-{
-    return x*y;
-}
-
-static real U[] = {
-    0.659027622374092,
-    0.659027622374092,
-    0.231933368553031,
-    0.231933368553031,
-    0.109039009072877,
-    0.109039009072877,
-};
-
-static real V[] = {
-    0.231933368553031,
-    0.109039009072877,
-    0.659027622374092,
-    0.109039009072877,
-    0.659027622374092,
-    0.231933368553031,
-};
-
-static real W[] = {
-    0.16666666666666666667,
-    0.16666666666666666667,
-    0.16666666666666666667,
-    0.16666666666666666667,
-    0.16666666666666666667,
-    0.16666666666666666667,
-};
 
 struct Param {
     const real *a, *b, *c;
@@ -137,8 +104,8 @@ cubtri_apply(T * q, const real a[3], const real b[3],
     p.a = a;
     p.b = b;
     p.c = c;
-    function.function = G;
-    function.params = NULL;
+    function.function = F;
+    function.params = &p;
     i = 0;
     TT[i++] = a0[X];
     TT[i++] = a0[Y];
