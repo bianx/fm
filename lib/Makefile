@@ -10,11 +10,11 @@ CO_D_CFLAGS = `co.conf --cflags d`
 CO_L_CFLAGS = `co.conf --cflags l`
 
 L = libfm_s.a libfm_d.a libfm_l.a
-H = fm.h
+H = fm.h cubtri.h
 
-O_D = fm.d.o
-O_S = fm.s.o
-O_L = fm.l.o
+O_D = fm.d.o cubtri_c.d.o
+O_S = fm.s.o cubtri_c.s.o
+O_L = fm.l.o cubtri_c.l.o
 
 O =\
 cubtri_lib.o\
