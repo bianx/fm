@@ -114,6 +114,7 @@ cubtri_apply(T * q, const real a[3], const real b[3],
     TT[i++] = c0[X];
     TT[i++] = c0[Y];
 
+    ier = 0;
     cubtri2(&function, TT, eps, mcalls, &ans, &err, &ncalls, w, NW, &ier);
     if (ier != 0)
       ERR(CO_NUM, "cubtri2 failed");
