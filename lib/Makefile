@@ -17,6 +17,8 @@ O_S = fm.s.o
 O_L = fm.l.o
 
 O =\
+cubtri_lib.o\
+cubtri.o\
 main.o\
 d3tstrcr.o\
 l3dterms.o\
