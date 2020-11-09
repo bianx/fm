@@ -1,6 +1,6 @@
 .POSIX:
 .SUFFIXES:
-.SUFFIXES:  .f .f90 .o .s.o .d.o .l.o
+.SUFFIXES: .s.o .d.o .l.o .o .f .f90 .c
 
 include ../conf.mk
 PREC = d
@@ -44,7 +44,7 @@ libfm_l.a: $O $(O_L); ar r $@ $O $(O_L) && ranlib $@
 
 .f.o:; $(FC) $(FCFLAGS) $(FXFLAGS) $< -c
 .f90.o:; $(FC) $(FCFLAGS) $(FXFLAGS) $< -c
-.c.o:; $(CC) $(CFLAGS) $(FXFLAGS) $< -c
+.c.o:; $(CC) $(CFLAGS) $< -c
 
 .c.s.o:; $(CC) $(CFLAGS) $(CO_S_CFLAGS) -c -o $@ $<
 .c.d.o:; $(CC) $(CFLAGS) $(CO_D_CFLAGS) -c -o $@ $<
