@@ -1,4 +1,5 @@
 .POSIX:
+.SUFFIXES:
 .SUFFIXES:  .f .f90 .o .s.o .d.o .l.o
 
 include ../conf.mk
@@ -41,9 +42,9 @@ libfm_s.a: $O $(O_S); ar r $@ $O $(O_S) && ranlib $@
 libfm_d.a: $O $(O_D); ar r $@ $O $(O_D) && ranlib $@
 libfm_l.a: $O $(O_L); ar r $@ $O $(O_L) && ranlib $@
 
-.f.o:; $(FC) $(FCFLAGS) $< -c
-.f90.o:; $(FC) $(FCFLAGS) $< -c
-.c.o:; $(CC) $(CFLAGS) $< -c
+.f.o:; $(FC) $(FCFLAGS) $(FXFLAGS) $< -c
+.f90.o:; $(FC) $(FCFLAGS) $(FXFLAGS) $< -c
+.c.o:; $(CC) $(CFLAGS) $(FXFLAGS) $< -c
 
 .c.s.o:; $(CC) $(CFLAGS) $(CO_S_CFLAGS) -c -o $@ $<
 .c.d.o:; $(CC) $(CFLAGS) $(CO_D_CFLAGS) -c -o $@ $<
@@ -57,5 +58,4 @@ lib: $L
 hdr: $H
 	co.install $H $(PREFIX)/include
 
-.PHONY: clean lint install
 clean:; rm -f -- $O $L
