@@ -32,7 +32,7 @@ if test $# -eq 0; then err 'expection precision: s/d'; fi
 p="$1"; shift
 case "$p" in
     s|d|l) ;;
-    *) err "unknown PRECISION '$a'" ;;
+    *) err "unknown PRECISION '$p'" ;;
 esac
 
 e PKG_CONFIG_PATH="$PREFIX/share/pkgconfig:$PKG_CONFIG_PATH"
